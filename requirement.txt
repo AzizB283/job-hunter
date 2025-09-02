@@ -1,0 +1,4 @@
+requests
+feedparser
+python-telegram-bot
+python-dotenv

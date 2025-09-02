@@ -1,0 +1,9 @@
+venv/
+# Add standard virtualenv folders to ignore
+.venv/
+env/
+ENV/
+# Local dotenv file
+.env
+# Python cache
+__pycache__/
