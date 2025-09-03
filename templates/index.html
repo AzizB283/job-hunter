@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Hunter UI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+  <h1 class="mb-4">Job Hunter</h1>
+
+  <form method="post" action="{{ url_for('index') }}" class="mb-4" id="searchForm">
+    <div class="mb-3">
+      <label for="keywords" class="form-label">Keywords (comma or newline separated)</label>
+      <textarea id="keywords" name="keywords" class="form-control" rows="3">{{ keywords_input }}</textarea>
+    </div>
+    <div class="row g-2 align-items-center mb-3">
+      <div class="col-auto">
+        <label for="hours" class="col-form-label">Posted within last</label>
+      </div>
+      <div class="col-auto">
+        <input type="number" min="0" class="form-control" id="hours" name="hours" value="{{ hours }}">
+      </div>
+      <div class="col-auto">
+        <span class="form-text">hours (0 = any)</span>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
+  </form>
+
+  {% if results %}
+    <h2>Results ({{ results|length }})</h2>
+    <div class="list-group mt-3">
+      {% for r in results %}
+        <a class="list-group-item list-group-item-action" href="{{ r.link }}" target="_blank">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ r.title }}</h5>
+            <small>{{ r.source }}</small>
+          </div>
+          <p class="mb-1 text-muted">Published: {{ r.published }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">No results yet. Enter keywords and press Search.</p>
+  {% endif %}
+
+</div>
+
+<script>
+// Small client-side handler to make submit visible in DevTools and prevent double submits
+document.addEventListener('DOMContentLoaded', function(){
+  var form = document.getElementById('searchForm');
+  if(!form) return;
+  form.addEventListener('submit', function(){
+    var btn = document.getElementById('searchBtn');
+    if(btn){
+      btn.disabled = true;
+      btn.innerText = 'Searching...';
+    }
+    console.log('Form submitted');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# filepath: /var/www/html/job-hunter/requirements.txt
+flask
+requests
+feedparser
+python-dotenv
